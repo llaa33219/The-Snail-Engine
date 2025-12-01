@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Snail Engine - Documentation</title>
+    <script src="thesnail.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        #container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Custom scrollbar for code blocks if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const engine = new TheSnail();
+
+
+        const documentationSource = `
+*|*The Snail Engine Documentation*|*
+?!|Reference Guide|!?
+
+*!!|Welcome to The Snail Engine|!!*
+
+[Introduction]
+The Snail Engine is a custom wiki-style markup engine designed for flexibility and ease of use. This document explains the syntax and features available.
+]END[
+
+[Text Formatting]
+This section covers all text formatting options.
+]END[
+
+[[Basic Styles]]
+You can apply various styles to your text:
+- !!Bold Text!!: {|!!Bold Text!!|}
+- //Italic Text//: {|//Italic Text//|}
+- --Strike Text--: {|--Strike Text--|}
+- __Underline Text__: {|__Underline Text__|}
+- _^Overline Text_^: {|_^Overline Text_^|}
+- ~~Wavy Text~~: {|~~Wavy Text~~|}
+- ::Hidden Text::: {|::Hidden Text::|} (Hover to see)
+- @@Flipped Text@@: {|@@Flipped Text@@|}
+]END[
+
+[[Advanced Styles]]
+- +^Superscript^+: {|+^Superscript^+|}
+- +_Subscript_+: {|+_Subscript_+|}
+- ??[red]Colored Text??: {|??[red]Colored Text??|}
+- \`[Ctrl]\` + \`[C]\`: {|\`[Ctrl]\` + \`[C]\`|} (Keyboard keys)
+- \`\`Inline Code\`\`: {|\`\`Inline Code\`\`|}
+]END[
+
+[[Font Sizes]]
+Use exclamation marks to control font size (1 to 12 levels):
+- !|Size 1 (Largest)|!: {|!|Size 1|!|}
+- !!|Size 2|!!: {|!!|Size 2|!!|}
+- !!!|Size 3|!!!: {|!!!|Size 3|!!!|}
+- !!!!!!!!!!!!|Size 12 (Smallest)|!!!!!!!!!!!!: {|!!!!!!!!!!!!|Size 12|!!!!!!!!!!!!|}
+]END[
+
+[Structure]
+This section covers document structure elements.
+]END[
+
+[[Headers and Sections]]
+Sections are created using brackets. The number of brackets determines the nesting level (1-12). All sections must end with {|]END[|}.
+{|
+[Level 1 Header]
+Content...
+]END[
+
+[[Level 2 Header]]
+Content...
+]END[
+|}
+]END[
+
+[[Lists]]
+Unordered lists use {|-|}:
+- Item 1
+-- Item 1.1
+--- Item 1.1.1
+
+Ordered lists use {|+.|}:
++. First
+++. Second (Nested)
++++. Third (Deeply Nested)
+]END[
+
+[[Blockquotes and Lines]]
+Horizontal Rule: {|----|}
+----
+Colored Rule: {|--[red]--|}
+--[red]--
+
+Blockquotes use {|""|}:
+""
+This is a blockquote.
+It can contain multiple lines.
+""
+]END[
+
+[Media and Links]
+This section covers media embedding and links.
+]END[
+
+[[Links]]
+- Link: &&[#]Example Link&& -> {|&&[url]text&&|}
+]END[
+
+[[Images]]
+- Image: !&https://via.placeholder.com/150&! -> {|!&url&!|}
+- Resized Image: !&[50, 50]https://via.placeholder.com/150&! -> {|!&[width, height]url&!|}
+]END[
+
+[[Videos]]
+- Video: ?&video.mp4&? -> {|?&url&?|}
+- Resized Video: ?&[300, 200]video.mp4&? -> {|?&[width, height]url&?|}
+]END[
+
+[Tables]
+Tables are created with {|[{content}]|}.
+[{Header 1}][{Header 2}]
+[{Cell 1}][{Cell 2}]
+[{[#eef]Colored Cell}][{Normal Cell}]
+
+Syntax:
+{|
+[{Header 1}][{Header 2}]
+[{Cell 1}][{Cell 2}]
+[{[color]Cell}][{Cell}]
+|}
+]END[
+
+[[Variable Column Tables]]
+Rows can have different numbers of columns. Consecutive lines starting with {|[{|}} are merged into one table:
+[{Wide Header (spans conceptually)}]
+[{Col 1}][{Col 2}][{Col 3}]
+[{A}][{B}]
+[{Single Cell Row}]
+
+Syntax:
+{|
+[{Wide Header}]
+[{Col 1}][{Col 2}][{Col 3}]
+[{A}][{B}]
+[{Single Cell}]
+|}
+]END[
+
+[[Split Cells]]
+You can split a cell into multiple parts using {||||}:
+[{Normal Cell}][{Split||Into||Three}]
+[{Left||Right}][{A||B||C||D}]
+
+Syntax:
+{|
+[{content1||content2}]  - splits into 2 parts
+[{a||b||c}]  - splits into 3 parts
+|}
+]END[
+
+[[Nested Tables]]
+You can create nested tables (tables inside tables) using double brackets {|[[{content}]]|}.
+
+[{Outer Cell 1}][{[[{Inner A}]][[{Inner B}]]}]
+[{Outer Cell 2}][{[[{Inner C}]][[{Inner D}]]}]
+
+Triple nested example:
+[{Main}][{[[{Sub 1}]][[{[[[{Deep A}]]][[[{Deep B}]]]}]]}]
+
+Syntax:
+{|
+[{Outer Cell}][{[[{Inner Cell 1}]][[{Inner Cell 2}]]}]
+[{Cell}][{[[{[color]Colored Inner}]][[{Normal Inner}]]}]
+|}
+
+For deeper nesting, add more brackets:
+- Level 1: {|[{...}]|}
+- Level 2 (nested): {|[[{...}]]|}
+- Level 3 (deeply nested): {|[[[{...}]]]|}
+]END[
+
+[Boxes and Layout]
+This section covers layout boxes.
+]END[
+
+[[Floating Boxes]]
+You can create floating boxes with {|%%[width, height]{position}%%|}.
+%%[200, 100]{right}%%
+This is a right-aligned box.
+%%END%%
+Text wraps around the box.
+
+Syntax:
+{|
+%%[width, height]{position}%%
+Content...
+%%END%%
+|}
+Positions: {|left|}, {|right|}, {|center|}.
+]END[
+
+[[Infobox Style]]
+Boxes support full markup inside, similar to Wikipedia's infobox:
+%%[250, auto]{right}%%
+[{[#005BDD]!!The Snail Engine!!}]
+[{!&[230, 150]https://img.bloupla.net/q8mYakax?raw=1&!}]
+[{[#eef]!!Type!!||Custom Markup Engine}]
+[{[#eef]!!Version!!||1.0}]
+[{[#eef]!!Author!!||BLOUplanet}]
+[{[#eef]!!License!!||MIT}]
+[{[#eef]!!Website!!||&&[#]snail.example&&}]
+%%END%%
+
+The infobox demonstrates that all formatting works inside boxes:
+- !!Bold!!, //italic//, __underline__
+- Tables with [{cells}]
+- Links &&[url]text&&
+- Images !&url&!
+- And more!
+
+Syntax for infobox:
+{|
+%%[250, auto]{right}%%
+[{[#005BDD]!!Title!!}]
+[{!&[width, height]image_url&!}]
+[{[#eef]!!Label!!||Value}]
+[{[#eef]!!Label!!||Value}]
+%%END%%
+|}
+]END[
+
+[Special Features]
+This section covers special features.
+]END[
+
+[[Raw Text]]
+Use {|{\| ... \|}|} to display raw text without formatting.
+]END[
+
+[[HTML Block]]
+Use {|<<html>> ... >>END<<|} to inject raw HTML.
+<<html>>
+<button onclick="alert('Hello from Snail Engine!')" style="padding: 5px 10px; cursor: pointer;">Click Me</button>
+>>END<<
+]END[
+
+[[Tooltips]]
+Hover over this: |=[This is a tooltip]Tooltip Example=|.
+Syntax: {||=[Tooltip Content]Text=||}
+]END[
+`;
+
+
+        // Render the documentation
+        document.getElementById('output').innerHTML = engine.render(documentationSource);
+    </script>
+</body>
+
+</html>
