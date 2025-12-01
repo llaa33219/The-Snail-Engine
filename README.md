@@ -1,2 +1,2 @@
 # The-Snail-Engine
-Wiki-style render engine
+Wiki-style markup engine
